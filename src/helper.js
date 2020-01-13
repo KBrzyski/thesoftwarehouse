@@ -23,3 +23,11 @@ export const formatDate = date => {
     const formatDate = new Date(date);
     return `${formatDate.toLocaleString('en-GB', {month: 'short'})} ${formatDate.getDate()}, ${formatDate.getFullYear()}`;
 };
+
+export const visibilityConfig = (element, action) => {
+    if (action === 'show') {
+      element.removeClass('is-hidden');
+    } else if (action === 'hide') {
+      element.addClass('is-hidden');
+    }
+};

@@ -1,7 +1,7 @@
 import './assets/scss/app.scss';
 import $ from 'cash-dom';
 import 'whatwg-fetch';
-import { validation, convertToJson, create} from './helper';
+import { validation, convertToJson, create, visibilityConfig} from './helper';
 import api from './api';
 import PullRequestEvent from './PullRequestEvent';
 import PullRequestReviewCommentEvent from './PullRequestReviewCommentEvent';
@@ -30,10 +30,16 @@ const App = () => {
 
     //function to get profile data
     const getProfileData = async username => {
+      visibilityConfig($('.profile'), 'hide');
+      visibilityConfig($('.timeline'), 'hide');
+      visibilityConfig($('.pl'),'show');
+      visibilityConfig($('.hl'),'show');
       try {
         const response = await api.getProfile(username);
         profileData = await convertToJson(response);
         updateProfile();
+        visibilityConfig($('.profile'), 'show');
+        visibilityConfig($('.pl'),'hide');
         return true;
       } catch (error) {
         return false;
@@ -63,6 +69,8 @@ const App = () => {
         } else {
           timeline.text('No data to show.'); 
         }
+        visibilityConfig($('.timeline'), 'show');
+        visibilityConfig($('.hl'), 'hide');
       } catch (error) {
         timeline.text(error); 
       }

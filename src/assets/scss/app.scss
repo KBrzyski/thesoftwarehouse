@@ -18,3 +18,8 @@
 .timeline .timeline-item {
   padding-bottom:1em;
 }
+
+.pl, .hl {
+  @include loader;
+  display: inline-block;
+}
