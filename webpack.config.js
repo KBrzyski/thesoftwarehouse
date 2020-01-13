@@ -1,12 +1,8 @@
-const path = require('path'),
-  webpack = require('webpack'),
-  CleanWebpackPlugin = require('clean-webpack-plugin'),
-  HtmlWebpackPlugin = require('html-webpack-plugin'),
-  ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const extractPlugin = new ExtractTextPlugin({filename: './assets/css/app.css'});
-
-const config = {
+module.exports = {
 
   context: path.resolve(__dirname, 'src'),
 
@@ -26,35 +22,19 @@ const config = {
         test: /\.js$/,
         include: /src/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['env']
-          }
-        }
+        loader: "babel-loader"
       },
       {
         test: /\.html$/,
         use: ['html-loader']
       },
       {
-        test: /\.s?css$/,
-        use: extractPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true
-              }
-            }, {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true
-              }
-            }
-          ],
-          fallback: 'style-loader'
-        })
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
       },
       {
         test: /\.(jpg|png|gif|svg)$/,
@@ -77,13 +57,12 @@ const config = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({template: 'index.html'}),
-    extractPlugin
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({template: 'index.html'})
   ],
 
   devServer: {
-    contentBase: path.resolve(__dirname, "./dist/assets/media"),
+    contentBase: path.resolve(__dirname, "./dist"),
     compress: true,
     port: 2000,
     stats: 'errors-only',
@@ -93,5 +72,3 @@ const config = {
   devtool: 'inline-source-map'
 
 };
-
-module.exports = config;
