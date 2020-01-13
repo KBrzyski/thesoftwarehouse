@@ -1,9 +1,16 @@
 import './assets/scss/app.scss';
 import $ from 'cash-dom';
 import 'whatwg-fetch';
+import { validation } from './helper';
 
 const App = () => {
   const initializeApp = () => {
+
+    //username validation
+    $('.username').on('keyup', e => {
+      const username = e.target.value;
+      validation(username, $('.username'), $('.load-username'));
+    })
 
     $('.load-username').on('click', () => {
       const username = $('.username').val();
