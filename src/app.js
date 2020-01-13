@@ -1,5 +1,6 @@
 import './assets/scss/app.scss';
 import $ from 'cash-dom';
+import 'whatwg-fetch';
 
 
 export class App {
